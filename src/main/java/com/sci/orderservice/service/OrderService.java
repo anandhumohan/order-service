@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.sci.orderservice.dto.OrderLineRequestDTO;
 import com.sci.orderservice.dto.OrderRequest;
@@ -19,6 +20,8 @@ public class OrderService {
 	
 	private final OrderRepository orderRepository;
 	
+	private final WebClient webClient;
+	
 	public void createOrder(OrderRequest orderRequest) {
 		
 		Order order = new Order();
@@ -29,7 +32,17 @@ public class OrderService {
 			.map(orderLineRequestDTO -> mapToDTO(orderLineRequestDTO)).toList();
 		
 		order.setOrderLines(orderLineList);
-		orderRepository.save(order);
+		
+		Boolean result = webClient.get()
+			.uri("http://localhost:8081/api/inventory/{sku-code}", orderRequest.getOrderLineRequestDTOList().get(0).getSkuCode())
+			.retrieve()
+			.bodyToMono(Boolean.class)
+			.block();
+		if(result) {
+			orderRepository.save(order);
+		}else {
+			throw new IllegalArgumentException("product code is not exist");
+		}
 		
 	}
 	

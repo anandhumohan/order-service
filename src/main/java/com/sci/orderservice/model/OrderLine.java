@@ -2,8 +2,6 @@ package com.sci.orderservice.model;
 
 import java.math.BigDecimal;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
