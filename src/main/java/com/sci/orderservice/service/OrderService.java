@@ -38,7 +38,7 @@ public class OrderService {
 			.retrieve()
 			.bodyToMono(Boolean.class)
 			.block();
-		if(result) {
+		if(Boolean.TRUE.equals(result)) {
 			orderRepository.save(order);
 		}else {
 			throw new IllegalArgumentException("product code is not exist");
