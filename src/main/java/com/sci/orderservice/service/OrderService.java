@@ -20,7 +20,7 @@ public class OrderService {
 	
 	private final OrderRepository orderRepository;
 	
-	private final WebClient webClient;
+	private final WebClient.Builder webClient;
 	
 	public void createOrder(OrderRequest orderRequest) {
 		
@@ -33,8 +33,8 @@ public class OrderService {
 		
 		order.setOrderLines(orderLineList);
 		
-		Boolean result = webClient.get()
-			.uri("http://localhost:8081/api/inventory/{sku-code}", orderRequest.getOrderLineRequestDTOList().get(0).getSkuCode())
+		Boolean result = webClient.build().get()
+			.uri("http://inventory-service/api/inventory/{sku-code}", orderRequest.getOrderLineRequestDTOList().get(0).getSkuCode())
 			.retrieve()
 			.bodyToMono(Boolean.class)
 			.block();
