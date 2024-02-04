@@ -23,6 +23,6 @@ public class OrderController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public String createOrder(@RequestBody OrderRequest orderRequest) {
 		ordeService.createOrder(orderRequest);
-		return "Saved Successfully.";
+		return "Saved Successfully";
 	}
 }
