@@ -17,12 +17,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderController {
 	
-	private final OrderService ordeService;
+	private final OrderService orderService;
 		
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public String createOrder(@RequestBody OrderRequest orderRequest) {
-		ordeService.createOrder(orderRequest);
+		orderService.createOrder(orderRequest);
 		return "Saved Successfully.";
 	}
 }
